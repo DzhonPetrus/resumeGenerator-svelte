@@ -1,41 +1,44 @@
-import { writable } from 'svelte/store';
-import axios from "axios";
-
-const cachePersonalInfo = new Map();
+import {writable} from 'svelte/store';
 export let personalInfoId = writable();
-export let currentPersonalInfo = writable();
+
+import axios from 'axios';
 
 // FETCHING DATA WITH CACHE
-const apiUrl = `http://resumeGenerator.test/api/personalInfo`;
+const URL = `http://resumeGenerator.test/api/personalInfo`;
 
-export function getPersonalInfo(piId){
 
-    let url = `${apiUrl}/${piId}`;
-    const personalInfo = writable(new Promise(() => {}));
-
-    if(cachePersonalInfo.has(url)){
-        personalInfo.set(Promise.resolve(cachePersonalInfo.get(url)));
+export async function getAllPersonalInfo() {
+    try {
+        const response = await axios.get(URL);
+        return response.data;
+    } catch (error){
+        console.error(error);
     }
+};
 
-    const load = async () => {
-        const response = await fetch(url);
-        const data = await response.json();
-
-        if (!(data[0]===undefined))
-            currentPersonalInfo.set(data[0]);
-
-        cachePersonalInfo.set(url, data);
-        personalInfo.set(Promise.resolve(data));
+export async function getOnePersonalInfo(userId) {
+    try {
+        const response = await axios.get(`${URL}/${userId}`);
+        return response.data[0];
+    } catch (error){
+        console.error(error);
     }
+};
 
-    load();
+export async function addPersonalInfo(body){
+    try {
+        const response = await axios.post(URL, body);
+        return response.data;
+    } catch (error){
+        console.error(err);
+    }
+};
 
-    return personalInfo;
-}
-
-export function postPersonalInfo(info){
-    console.log(info);
-    axios.post(apiUrl, info)
-    .then(response => console.log(response))
-    .catch(err => console.error(err));
-}
+export async function updatePersonalInfo(body){
+    try {
+        const response = await axios.put(URL, body);
+        return response.data;
+    } catch (error){
+        console.error(err);
+    }
+};
