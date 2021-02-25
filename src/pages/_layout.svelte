@@ -4,7 +4,7 @@
 
     import {personalInfoId} from '../stores/personalInfoStore';
 
-    $personalInfoId=3;
+    $personalInfoId=1;
 
 </script>
 

@@ -1,5 +1,7 @@
 <script>
     import { url, isActive } from '@sveltech/routify';
+    import ToggleDarkMode from './ToggleDarkMode.svelte';
+
     const links = [
         ["./index" , "Home", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
   <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
@@ -22,11 +24,14 @@
     
 </script>
 
-<header class="w-full h-16 z-40 flex items-center justify-between">
+<header class="w-full h-16 z-40 flex items-center justify-between lg:hidden">
     <div class="block lg:hidden ml-6">
         <nav class="mt-2">
-            <div class="max-w-7xl mx-auto px-8">
+            <div class="max-w-7xl mx-auto px-">
                 <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center ">
+                        <p class="font-bold dark:text-white text-xl">ResumeGenerator</p>
+                    </div>
                     <div class=" flex items-center">
                     {#each links as [path, name, icon]}
                         <a class="{$isActive(path) ? 'border-l-4 border-purple-500 dark:text-white text-gray-800' : 'text-gray-400'} w-full flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start " href={$url(path)}>
@@ -41,6 +46,7 @@
                         </a>
                     {/each}
                     </div>
+                    <ToggleDarkMode />
                 </div>
             </div>
         </nav>

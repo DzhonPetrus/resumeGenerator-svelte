@@ -24,7 +24,9 @@
   "dependencies": {
     "@sveltech/routify": "^1.1.1-1",
     "@svelteschool/svelte-forms": "^0.7.0",
+    "axios": "^0.21.1",
     "sirv-cli": "^1.0.0",
-    "svelte-loading-spinners": "^0.1.4"
+    "svelte-loading-spinners": "^0.1.4",
+    "yup": "^0.32.9"
   }
 }
