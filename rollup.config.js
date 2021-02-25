@@ -5,6 +5,8 @@ import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import css from 'rollup-plugin-css-only';
 
+import { routify } from '@sveltech/routify';
+
 const production = !process.env.ROLLUP_WATCH;
 
 function serve() {
@@ -37,12 +39,15 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
-		svelte({
-			compilerOptions: {
-				// enable run-time checks when not in production
-				dev: !production
-			}
+		routify({
+			singleBuild: true,
 		}),
+			svelte({
+				compilerOptions: {
+					// enable run-time checks when not in production
+					dev: !production
+				},
+			}),
 		// we'll extract any component CSS out into
 		// a separate file - better for performance
 		css({ output: 'bundle.css' }),
