@@ -4,17 +4,22 @@
     import { getPersonalInfo, personalInfoId } from '../stores/personalInfoStore';
 
 
-    const apiUrl = `http://resumeGenerator.test/api/personalInfo`;
 
-    $: personalInfo = getPersonalInfo(`${apiUrl}/${$personalInfoId}`);
+    $: personalInfo = getPersonalInfo($personalInfoId);
+    $: console.log(personalInfo);
 
     let values;
 </script>
 
-<h1>PERSONAL INFO</h1>
+
+<h1 class="text-4xl font-semibold text-gray-800 dark:text-white">PERSONAL INFORMATION</h1>
+<h2 class="text-md text-gray-400">Input your personal information in the form below</h2>
+
+
 
 
 <Form bind:values>
+    <input class="form-input form-input-dark form-input-sm">
   <fieldset>
     <input placeholder="First name" type="text" name="fName" required/>
 		<input placeholder="Middle name" type="text" name="mName" />
@@ -25,7 +30,21 @@
     <input placeholder="Contact Number" type="text" maxlength="15" name="contactNo" required/>
   </fieldset>
   <fieldset>
-    <textarea placeholder="Address" name="address" required/>
+    <label class="text-gray-700" for="name">
+    <textarea class="flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 rounded-lg text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" placeholder="Enter your address" name="address" rows="5" cols="40">
+    </textarea>
+    </label>
+  
+    <div class=" relative ">
+    <label for="required-email" class="text-gray-700">
+        Email
+        <span class="text-red-500 required-dot">
+            *
+        </span>
+    </label>
+    <input type="text" id="required-email" class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" name="city" placeholder="city"/>
+    </div>
+
     <input placeholder="City" type="text" name="city" required/>
     <input placeholder="Province" type="text" name="province" required/>
     <input placeholder="Zip Code" type="text" name="zipCode" maxlength="10" required/>
@@ -53,8 +72,11 @@
         {pi.address} <br>
         {pi.province} <br>
         {pi.zipCode} <br>
-        {console.log(pi)} <br>
     {/each}
 {:catch}
     ERROR
 {/await}
+
+
+
+                      
