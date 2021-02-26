@@ -6,6 +6,18 @@ export const extractErrors = err => {
     }, {});
 };
 
+
+export let workHistorySchema = yup.object().shape({
+    jobTitle: yup.string().required('Please specify the Job Title'),
+    employer: yup.string().required('Please specify the Employer'),
+    startDate: yup.date().required('Please specify the Starting Date'),
+    endDate: yup.date().nullable(true),
+    currentWork: yup.array().nullable(true),
+    location: yup.string().required('Please specify the location'),
+    jobDescription: yup.string().required('Please specify the Job Description'),
+});
+
+
 export let personalInfoSchema = yup.object().shape({
     fName: yup.string().required('Please enter your first name'),
     mName: yup.string().nullable(true),

@@ -9,7 +9,7 @@
 
 
     import { addPersonalInfo, updatePersonalInfo, getOnePersonalInfo } from "../controllers/personalInfoController";
-    import {currentUser} from "../util/store";
+    import {currentUser, currentUserPersonalInfo} from "../util/store";
 
     import { extractErrors, personalInfoSchema } from "../util/schemas.js";
 
@@ -37,6 +37,7 @@
             if(confirm('Are you sure you want to save your Personal Info?')){
                 response = await updatePersonalInfo(newInfo);
                 notifier.success(response[0]);
+                currentUserPersonalInfo.set(newInfo);
             }
         }catch(err){
             errors = extractErrors(err);
@@ -51,6 +52,7 @@
         if(res!==undefined){
             personalInfo = res;
             values = res;
+            currentUserPersonalInfo.set(res);
         }
     };
 

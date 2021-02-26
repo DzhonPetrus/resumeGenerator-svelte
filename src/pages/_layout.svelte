@@ -3,11 +3,8 @@
     import Header from '../components/Header.svelte';
     import Login from '../components/Login.svelte';
 
-    import {personalInfoId , currentUser} from '../util/store.js';
+    import {currentUser} from '../util/store.js';
 
-    $personalInfoId=0;
-
-  console.log($currentUser);
 </script>
 
 

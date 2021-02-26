@@ -16,7 +16,6 @@
     $: samePassword = (values.password === values.confirmPassword);
 
     let userExist;
-    $:console.log(userExist);
 
     const register = async () => {
         try {
@@ -33,7 +32,7 @@
                 notifier.success('User successfully registered.', 2000);
                 // TODO
                 currentUser.set(response);
-                sessionStorage.setItem('currentUser', JSON.stringify(response));
+                sessionStorage.setItem('currentUser', JSON.stringify(response[0]));
             }else{
                 notifier.danger('Username already taken.', 2000);
             }
@@ -123,5 +122,3 @@
         </div>
     </div>
 </div>
-
-<pre>{JSON.stringify(values, undefined, 1)}</pre>

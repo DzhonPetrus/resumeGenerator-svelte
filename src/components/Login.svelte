@@ -21,8 +21,6 @@
 
 
             response = await loginUser(values);
-            console.log(response);
-            console.log(response[0]);
             if(response.length === 0){
                 notifier.danger('Invalid credentials', 3000);
             }else{
@@ -31,7 +29,6 @@
                 sessionStorage.setItem('currentUser', JSON.stringify(response[0]));
             }
         }catch(err){
-            console.log(err);
             errors = extractErrors(err);
             errors = Object.values(errors);
             errors.reverse().forEach(e => notifier.danger(e, 4000));
@@ -96,5 +93,3 @@
     <Register />
     
 {/if}
-
-<pre>{JSON.stringify(values, undefined, 1)}</pre>
