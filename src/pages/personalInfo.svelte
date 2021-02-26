@@ -1,47 +1,62 @@
 <script>
     import {onMount} from 'svelte';
 
+    
+    import {  notifier } from '@beyonk/svelte-notifications';
+
     import Form from "@svelteschool/svelte-forms";
     import { Stretch } from "svelte-loading-spinners";
 
 
-    import { addPersonalInfo, updatePersonalInfo, getOnePersonalInfo, getAllPersonalInfo, personalInfoId } from "../stores/personalInfoStore";
+    import { addPersonalInfo, updatePersonalInfo, getOnePersonalInfo } from "../controllers/personalInfoController";
+    import {currentUser} from "../util/store";
 
-    import { personalInfoSchema } from "../schemas/personalInfoSchema.js";
+    import { extractErrors, personalInfoSchema } from "../util/schemas.js";
 
     let values;
     let personalInfo;
 
-    let validity=false;
-
+    let errors={};
 
     const saveInfo = async () => {
-        validity = await personalInfoSchema.isValid(values);
-        if(validity){
+        try{
+            let response;
+            errors = {};
+            await personalInfoSchema.validate(values, {abortEarly:false});
+
             let newInfo = values;
             if(values.personalInfoId===undefined)
-                newInfo = {personalInfoId: personalInfo.personalInfoId, ...values}
+                newInfo = {personalInfoId: null, ...values}
                 
             if(values.userId===undefined)
-                newInfo = {userId: 3, ...newInfo}
+                newInfo = {userId: $currentUser.userId, ...newInfo}
 
             if(values.photoURL===undefined)
-                newInfo = {photoURL: personalInfo.photoURL, ...newInfo}
+                newInfo = {photoURL: null, ...newInfo}
 
-            let response = await updatePersonalInfo(newInfo);
-            console.log(response);
+            if(confirm('Are you sure you want to save your Personal Info?')){
+                response = await updatePersonalInfo(newInfo);
+                notifier.success(response[0]);
+            }
+        }catch(err){
+            errors = extractErrors(err);
+            errors = Object.values(errors);
+            errors.reverse().forEach(e => notifier.danger(e, 4000));
         }
     };
 
-
-    onMount(async () => {
-        const res = await getOnePersonalInfo($personalInfoId);
+    const getInfo = async () => {
+        const res = await getOnePersonalInfo($currentUser.userId);
+        values.personalInfoId=null;
         if(res!==undefined){
             personalInfo = res;
             values = res;
         }
-    });
+    };
+
+    personalInfo = getInfo();
 </script>
+
 
 <h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
     PERSONAL INFORMATION
@@ -49,7 +64,7 @@
 
 <br />
 
-{#await values}
+{#await personalInfo}
     <div class="flex items-center justify-center w-full mt-8">
         <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
     </div>
@@ -68,12 +83,16 @@
                             >First name</label
                         >
                         <input
-                            required
                             type="text"
                             name="fName"
                             autocomplete="given-name"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent}"
                         />
+                        {#if errors.fName}
+                        <p class="text-sm text-red-500 -bottom-6">
+                            {errors.fName}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -81,10 +100,9 @@
                             >Middle name</label
                         >
                         <input
-                            required
                             type="text"
                             name="mName"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
                     </div>
 
@@ -97,8 +115,13 @@
                             type="text"
                             name="lName"
                             autocomplete="family-name"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.lName}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.lName}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -110,8 +133,13 @@
                             type="email"
                             name="email"
                             autocomplete="email"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.email}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.email}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -124,8 +152,13 @@
                             maxlength="11"
                             name="contactNo"
                             autocomplete="contactNo"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.contactNo}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.contactNo}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -136,8 +169,13 @@
                             required
                             type="date"
                             name="birthDate"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.birthDate}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.birthDate}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-6">
@@ -149,8 +187,13 @@
                             type="text"
                             name="address"
                             autocomplete="address"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.address}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.address}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-2">
@@ -162,8 +205,13 @@
                             type="text"
                             name="city"
                             autocomplete="city"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.city}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.city}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-2">
@@ -175,8 +223,13 @@
                             type="text"
                             name="province"
                             autocomplete="province"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.province}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.province}
+                        </p>
+                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-2">
@@ -188,8 +241,13 @@
                             type="number"
                             name="zipCode"
                             autocomplete="zipCode"
-                            class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                            class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
+                        {#if errors.zipCode}
+                        <p class="absolute text-sm text-red-500 -bottom-6">
+                            {errors.zipCode}
+                        </p>
+                        {/if}
                     </div>
                 </div>
             </div>
@@ -204,9 +262,3 @@
         </div>
     </Form>
 </div>
-
-<pre>{JSON.stringify(values, undefined, 1)}</pre>
-
-<button on:click={() => console.log(values)}>
-    Check 'dat two-way binding!
-</button>

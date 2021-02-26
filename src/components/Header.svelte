@@ -30,18 +30,15 @@
             <div class="max-w-7xl mx-auto px-">
                 <div class="flex items-center justify-between h-16">
                     <div class="flex items-center ">
-                        <p class="font-bold dark:text-white text-xl">ResumeGenerator</p>
+                        <p class="font-bold dark:text-white text-xl">RG</p>
                     </div>
-                    <div class=" flex items-center">
+                    <div class=" flex items-center ml-6">
                     {#each links as [path, name, icon]}
                         <a class="{$isActive(path) ? 'border-l-4 border-purple-500 dark:text-white text-gray-800' : 'text-gray-400'} w-full flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start " href={$url(path)}>
                         <span class="text-left">
                             <svg width="20" height="20" >
                                 {@html icon}
                             </svg>
-                        </span>
-                        <span class="mx-2 text-sm font-normal">
-                            {name}
                         </span>
                         </a>
                     {/each}

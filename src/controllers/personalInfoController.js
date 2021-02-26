@@ -1,6 +1,3 @@
-import {writable} from 'svelte/store';
-export let personalInfoId = writable();
-
 import axios from 'axios';
 
 // FETCHING DATA WITH CACHE

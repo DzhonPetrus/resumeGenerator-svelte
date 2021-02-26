@@ -1,5 +1,5 @@
 <script>
-    import {isDarkMode} from '../stores/store.js';
+    import {isDarkMode} from '../util/store.js';
     $: $isDarkMode
         ? document.body.classList.add("dark")
         : document.body.classList.remove("dark");
