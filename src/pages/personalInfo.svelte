@@ -60,7 +60,7 @@
 </script>
 
 
-<h1 class="text-4xl font-semibold text-gray-800 dark:text-white">
+<h1 class="text-3xl font-semibold text-gray-800 dark:text-white">
     PERSONAL INFORMATION
 </h1>
 
@@ -90,11 +90,6 @@
                             autocomplete="given-name"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent}"
                         />
-                        {#if errors.fName}
-                        <p class="text-sm text-red-500 -bottom-6">
-                            {errors.fName}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -119,11 +114,6 @@
                             autocomplete="family-name"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.lName}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.lName}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -137,11 +127,6 @@
                             autocomplete="email"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.email}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.email}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -156,11 +141,6 @@
                             autocomplete="contactNo"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.contactNo}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.contactNo}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-3">
@@ -173,11 +153,6 @@
                             name="birthDate"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.birthDate}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.birthDate}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-6">
@@ -191,11 +166,6 @@
                             autocomplete="address"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.address}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.address}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-2">
@@ -209,11 +179,6 @@
                             autocomplete="city"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.city}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.city}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-2">
@@ -227,11 +192,6 @@
                             autocomplete="province"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.province}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.province}
-                        </p>
-                        {/if}
                     </div>
 
                     <div class="col-span-6 sm:col-span-2">
@@ -245,11 +205,6 @@
                             autocomplete="zipCode"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                         />
-                        {#if errors.zipCode}
-                        <p class="absolute text-sm text-red-500 -bottom-6">
-                            {errors.zipCode}
-                        </p>
-                        {/if}
                     </div>
                 </div>
             </div>

@@ -26,7 +26,7 @@
             }else{
                 notifier.success('Login successfull', 3000);
                 currentUser.set(response[0]);
-                sessionStorage.setItem('currentUser', JSON.stringify(response[0]));
+                localStorage.setItem('currentUser', JSON.stringify(response[0]));
             }
         }catch(err){
             errors = extractErrors(err);

@@ -1,5 +1,5 @@
 <script>
-    import DataTable from '../components/DataTable.svelte';
+    import DataTable from '../components/WHDataTable.svelte';
     
     import {  notifier } from '@beyonk/svelte-notifications';
 
@@ -14,6 +14,7 @@
 
     let values={};
     $:values.endDate = values.currentWork !== undefined ? null : values.endDate;
+    $:values.currentWork = values.endDate === null ? true : undefined;
     let errors = {};
     let workHistory;
     let currentSelectedWH;
@@ -27,9 +28,8 @@
 
             let newWH = values;
                 
-            if(values.currentWork!==undefined){
+            if(values.currentWork!==undefined)
                 values.currentWork=null;
-            }
 
             if(values.userId===undefined)
                 newWH = {userId: $currentUser.userId, ...newWH};
@@ -37,7 +37,7 @@
             if(confirm('Are you sure you want to save your Work History?')){
                 response = await addWorkHistory(newWH);
                 notifier.success(response[0]);
-                currentUserWorkHistory.set([...$currentUserWorkHistory, newWH]);
+                getWorkHistory();
                 values={};
             }
         }catch(err){
@@ -55,9 +55,8 @@
 
             let newWH = values;
                 
-            if(values.currentWork!==undefined){
+            if(values.currentWork!==undefined)
                 values.currentWork=null;
-            }
 
             if(values.userId===undefined)
                 newWH = {userId: currentSelectedWH[0].userId, ...newWH};
@@ -125,7 +124,9 @@
     };
 </script>
 
-
+<h1 class="text-3xl font-semibold text-gray-800 dark:text-white">
+    WORK HISTORY
+</h1>
 {#await workHistory}
     <div class="flex items-center justify-center w-full mt-8">
         <Stretch size="60" color="#FF3E00" unit="px" duration="1s" />
@@ -175,7 +176,7 @@
                         />
                     </div>
 
-                    <div class="col-span-4 sm:col-span-2">
+                    <div disabled={values.currentWork} class="col-span-4 sm:col-span-2">
                         <label class="block text-sm font-medium text-gray-700"
                             >End Date</label
                         >
@@ -183,7 +184,7 @@
                             type="date"
                             name="endDate"
                             class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                            disabled={values.currentWork}
+                            
                         />
                     </div>
 
