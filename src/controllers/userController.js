@@ -31,3 +31,12 @@ export async function registerUser(body){
         console.error(err);
     }
 };
+
+export async function updatePassword(body){
+    try {
+        const response = await axios.put(`${URL}/password`, body);
+        return response.data;
+    } catch (error){
+        console.error(err);
+    }
+};

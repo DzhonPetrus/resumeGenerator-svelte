@@ -1,69 +1,120 @@
 <script>
-    
-    let showModal = true;
-    const toggleModal = () => showModal = !showModal;
+  import {  notifier } from '@beyonk/svelte-notifications';
+  import Form from "@svelteschool/svelte-forms";
+
+  import {updatePassword, loginUser} from '../controllers/userController.js';
+  import {currentUser} from '../util/store.js';
+  import { extractErrors, accountPasswordSchema } from "../util/schemas.js";
+
+  let values;
+  let errors={};
+
+    const updateAccount = async () => {
+        try{
+            let response;
+            errors = {};
+            await accountPasswordSchema.validate(values, {abortEarly:false});
+
+
+            if(confirm('Are you sure you want to update your Password?')){
+
+              let loginCredential = {username: $currentUser.username, password: values.oldPassword}
+              response = await loginUser(loginCredential);
+              if(response.length === 0){
+                  notifier.danger('Invalid Old Password', 3000);
+              }else{
+                  let newAccount = {userId: $currentUser.userId, username: $currentUser.username, password:values.newPassword};
+
+                  response = await updatePassword(newAccount);
+                  notifier.success('Account has been successfully updated', 3000);
+                  currentUser.set(newAccount);
+                  localStorage.setItem('currentUser', JSON.stringify(newAccount));
+              }
+
+            }
+        }catch(err){
+            errors = extractErrors(err);
+            errors = Object.values(errors);
+            errors.reverse().forEach(e => notifier.danger(e, 4000));
+        }
+    };
+
 </script>
-<h1> WOOF INSIDE ROUTE </h1>
-<button on:click={() => showModal = !showModal}>show modal</button>
 
-
-
-
-
-
-<div on:click={toggleModal} hidden={showModal} class="fixed z-10 inset-0 overflow-y-auto">
-  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <!--
-      Background overlay, show/hide based on modal state.
-
-      Entering: "ease-out duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
-    <div class="fixed inset-0 transition-opacity" aria-hidden="true">
-      <div class="absolute inset-0 bg-gray-500 opacity-75"></div>
-    </div>
-
-    <!-- This element is to trick the browser into centering the modal contents. -->
-    <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-    <!--
-      Modal panel, show/hide based on modal state.
-
-      Entering: "ease-out duration-300"
-        From: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-        To: "opacity-100 translate-y-0 sm:scale-100"
-      Leaving: "ease-in duration-200"
-        From: "opacity-100 translate-y-0 sm:scale-100"
-        To: "opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-    -->
-    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:align-middle dark:bg-gray-800 " role="dialog" aria-modal="true" aria-labelledby="modal-headline">
-        <div class="shadow-lg rounded-2xl p-4 bg-white dark:bg-gray-800 w-64 m-auto">
-    <div class="w-full h-full text-center">
-        <div class="flex h-full flex-col justify-between">
-            <svg width="40" height="40" class="mt-4 w-12 h-12 m-auto text-indigo-500" fill="currentColor" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                <path d="M704 1376v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm256 0v-704q0-14-9-23t-23-9h-64q-14 0-23 9t-9 23v704q0 14 9 23t23 9h64q14 0 23-9t9-23zm-544-992h448l-48-117q-7-9-17-11h-317q-10 2-17 11zm928 32v64q0 14-9 23t-23 9h-96v948q0 83-47 143.5t-113 60.5h-832q-66 0-113-58.5t-47-141.5v-952h-96q-14 0-23-9t-9-23v-64q0-14 9-23t23-9h309l70-167q15-37 54-63t79-26h320q40 0 79 26t54 63l70 167h309q14 0 23 9t9 23z">
-                </path>
-            </svg>
-            <p class="text-gray-800 dark:text-gray-200 text-xl font-bold mt-4">
-                Remove card
-            </p>
-            <p class="text-gray-600 dark:text-gray-400 text-xs py-2 px-6">
-                Are you sure you want to delete this card ?
-            </p>
-            <div class="flex items-center justify-between gap-4 w-full mt-8">
-                <button type="button" class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                    Delete
-                </button>
-                <button type="button" class="py-2 px-4  bg-white hover:bg-gray-100 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-indigo-500 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
-                    Cancel
-                </button>
-            </div>
+<section class="h-screen bg-white dark:bg-gray-700">
+  <br /> <br /> <br />
+  <div class="container max-w-2xl mx-auto shadow-md md:w-3/4">
+    <div class="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
+      <div class="max-w-sm mx-auto md:w-full md:mx-0">
+        <div class="inline-flex items-center space-x-4">
+          <h1 class="text-gray-900 font-bold text-2xl justify-center items-center flex ">
+            ACCOUNT SETTINGS
+          </h1>
         </div>
+      </div>
     </div>
-</div>
+    <hr />
+    <div class="space-y-6 bg-white">
+      <div class="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+        <h2 class="max-w-sm mx-auto md:w-1/3">
+          Username
+        </h2>
+        <div class="max-w-sm mx-auto md:w-2/3">
+          <div class=" relative ">
+            <input disabled type="text" 
+              class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              placeholder="Username" value={$currentUser.username}/>
+          </div>
+        </div>
+      </div>
+      <hr />
+      <Form bind:values>
+      <div class="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+        <h2 class="max-w-sm mx-auto md:w-1/3">
+          New Password
+        </h2>
+        <div class="max-w-sm mx-auto md:w-2/3">
+          <div class=" relative ">
+            <input type="password" name="newPassword"
+              class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              placeholder="New Password" />
+          </div>
+        </div>
+      </div>
+      <div class="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+        <h2 class="max-w-sm mx-auto md:w-1/3">
+          Confirm New Password
+        </h2>
+        <div class="max-w-sm mx-auto md:w-2/3">
+          <div class=" relative ">
+            <input type="password" name="confirmNewPassword"
+              class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              placeholder="Confirm New Password" />
+          </div>
+        </div>
+      </div>
+      <div class="items-center w-full p-4 space-y-4 text-gray-500 md:inline-flex md:space-y-0">
+        <h2 class="max-w-sm mx-auto md:w-1/3">
+          Old Password
+        </h2>
+        <div class="max-w-sm mx-auto md:w-2/3">
+          <div class=" relative ">
+            <input type="password" name="oldPassword"
+              class=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+              placeholder="Old Password" />
+          </div>
+        </div>
+      </div>
+    </Form>
+      <hr />
+      <div class="w-full px-4 pb-4 ml-auto text-gray-500 md:w-1/3">
+        <button on:click={updateAccount}
+          class="py-2 px-4  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
+          Update
+        </button>
+      </div>
     </div>
   </div>
-</div>
+</section>
+
+<pre>{JSON.stringify(values, undefined, 1)}</pre>

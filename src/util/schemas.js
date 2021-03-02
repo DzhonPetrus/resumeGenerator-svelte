@@ -68,3 +68,9 @@ export let registerSchema = yup.object().shape({
     password: yup.string().required('Password is required'),
     confirmPassword: yup.string().required().oneOf([yup.ref('password'), null], 'Passwords do not match'),
 });
+
+export let accountPasswordSchema = yup.object().shape({
+    newPassword: yup.string().required('New Password is required'),
+    confirmNewPassword: yup.string().required().oneOf([yup.ref('newPassword'), null], 'New Passwords do not match'),
+    oldPassword: yup.string().required('Old Password is required'),
+});

@@ -34,8 +34,6 @@
             if(values.photoURL===undefined)
                 newInfo = {photoURL: null, ...newInfo}
 
-            newInfo = {image: file, ...newInfo}
-            
 
             if(confirm('Are you sure you want to save your Personal Info?')){
                 response = await updatePersonalInfo(newInfo);
