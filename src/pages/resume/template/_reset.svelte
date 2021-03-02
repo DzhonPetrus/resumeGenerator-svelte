@@ -12,10 +12,17 @@
 
 
     const getInfo = async () => {
-        currentUserPersonalInfo.set(await getOnePersonalInfo($currentUser.userId));
-        currentUserWorkHistory.set(await getAllWorkHistoryByUserId($currentUser.userId));
-        currentUserEBG.set(await getAllEducationBGByUserId($currentUser.userId));
-        currentUserCharacterRef.set(await getAllCharacterRefByUserId($currentUser.userId));
+        if($currentUserPersonalInfo.length === 0)
+            currentUserPersonalInfo.set(await getOnePersonalInfo($currentUser.userId));
+
+        if($currentUserWorkHistory.length === 0)
+            currentUserWorkHistory.set(await getAllWorkHistoryByUserId($currentUser.userId));
+        
+        if($currentUserCharacterRef.length === 0)
+            currentUserEBG.set(await getAllEducationBGByUserId($currentUser.userId));
+        
+        if($currentUserCharacterRef.length === 0)
+            currentUserCharacterRef.set(await getAllCharacterRefByUserId($currentUser.userId));
     };
 
 

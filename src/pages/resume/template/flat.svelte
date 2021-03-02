@@ -62,7 +62,7 @@
 </section>
 
 
-{#if workHistory !== []}
+{#if workHistory.length > 0}
 <section id="work" class="row">
     <aside class="col-sm-3">
         <h3>Work</h3>
@@ -92,7 +92,7 @@
 {/if}
 
 
-{#if educationBG !== []}
+{#if educationBG.length > 0}
 <section id="education" class="row">
     <aside class="col-sm-3">
         <h3>Education</h3>
@@ -151,7 +151,7 @@
 </section> -->
 
 
-{#if characterRef !== []}
+{#if characterRef.length > 0}
 <section id="references" class="row">
     <aside class="col-sm-3">
         <h3>References</h3>

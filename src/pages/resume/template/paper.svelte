@@ -76,7 +76,7 @@
                 </div>
               </section>
         
-              {#if workHistory !== []}
+              {#if workHistory.length > 0}
                 <section class="content">
                   <div class="row">
                     <div class="content-cat">
@@ -99,7 +99,7 @@
                 {/if}
 
 
-                {#if educationBG !== []}
+                {#if educationBG.length > 0}
                 <section class="content">
                   <div class="row">
                     <div class="content-cat">
@@ -135,7 +135,7 @@
               </section> -->
 
 
-        {#if characterRef !== []}
+        {#if characterRef.length > 0}
         <section class="content">
             <div class="row">
               <div class="content-cat">

@@ -49,7 +49,7 @@
 		<section id="profiles"></section>
 	</section>
 
-    {#if workHistory !== []}
+    {#if workHistory.length > 0}
 	<section id="work">
 		<h2>Work</h2>
         {#each workHistory as WH}
@@ -84,7 +84,7 @@
     {/if}
 
 	
-    {#if educationBG !== []}
+    {#if educationBG.length > 0}
     <section id="education">
 		<h2>Education</h2>
         {#each educationBG as EBG}
@@ -147,7 +147,7 @@
 
 
 
-{#if characterRef !== []}
+{#if characterRef.length > 0}
 	<section id="references">
 		<h2>References</h2>
         {#each characterRef as charRef}

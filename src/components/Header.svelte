@@ -7,13 +7,9 @@
     import ToggleDarkMode from './ToggleDarkMode.svelte';
 
     import {currentUser, currentUserPersonalInfo} from "../util/store.js";
-    import {getOnePersonalInfo} from '../controllers/personalInfoController.js';
 
-    const getProfile = async () => currentUserPersonalInfo.set(await getOnePersonalInfo($currentUser.userId));
-
-    getProfile();
     $: PI = $currentUserPersonalInfo;
-    $:fullName = `${PI.fName} ${PI.mName !== null ? PI.mName : ''} ${PI.lName} `;
+    $:fullName = `${PI.fName} ${(PI.mName !== null && PI.mName !== undefined) ? PI.mName : ''} ${PI.lName} `;
 
     const links = [
         ["./index", "Home", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">

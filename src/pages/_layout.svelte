@@ -4,6 +4,13 @@
     import Login from '../components/Login.svelte';
 
     import {currentUser, currentUserPersonalInfo} from '../util/store.js';
+    import {getOnePersonalInfo} from '../controllers/personalInfoController.js';
+
+
+    const getInfo = async () => currentUserPersonalInfo.set(await getOnePersonalInfo($currentUser.userId));
+
+    if($currentUserPersonalInfo.length === 0)
+      getInfo();
 
 </script>
 
@@ -20,8 +27,10 @@
       <Nav />
       
       <div class="flex flex-col w-full md:space-y-4">
-        {#if ($currentUserPersonalInfo.personalInfoId !== undefined)}
-          <Header />
+        {#if !($currentUserPersonalInfo.length > 0)}
+          {#if ($currentUserPersonalInfo.personalInfoId !== undefined)}
+            <Header />
+          {/if}
         {/if}
 
 

@@ -29,6 +29,7 @@
                   notifier.success('Account has been successfully updated', 3000);
                   currentUser.set(newAccount);
                   localStorage.setItem('currentUser', JSON.stringify(newAccount));
+                  values={};
               }
 
             }
@@ -44,7 +45,7 @@
 <section class="h-screen bg-white dark:bg-gray-700">
   <br /> <br /> <br />
   <div class="container max-w-2xl mx-auto shadow-md md:w-3/4">
-    <div class="p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
+    <div class="dark:bg-white p-4 bg-gray-100 border-t-2 border-indigo-400 rounded-lg bg-opacity-5">
       <div class="max-w-sm mx-auto md:w-full md:mx-0">
         <div class="inline-flex items-center space-x-4">
           <h1 class="text-gray-900 font-bold text-2xl justify-center items-center flex ">
@@ -117,4 +118,4 @@
   </div>
 </section>
 
-<pre>{JSON.stringify(values, undefined, 1)}</pre>
+<!-- <pre>{JSON.stringify(values, undefined, 1)}</pre> -->
