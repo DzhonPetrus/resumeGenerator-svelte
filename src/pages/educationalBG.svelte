@@ -101,7 +101,6 @@
         const res = await getAllEducationBGByUserId($currentUser.userId);
         if(res!==undefined || res !== []){
             educationBG = res;
-            values = res;
             currentUserEBG.set(res);
         }
     };

@@ -12,7 +12,7 @@ export const extractErrors = err => {
 export let characterRefSchema = yup.object().shape({
     name: yup.string().required('Please specify Full Name'),
     jobTitle: yup.string().required('Please specify the Job Title'),
-    contactNo: yup.number().required('Please provide contact number').positive(),
+    contactNo: yup.string().required('Please provide contact number').max(11, 'Contact Number\'s max length is 11'),
     email: yup.string().email(`Email doesn't look right`).required('Please provide your email')
 });
 
@@ -45,11 +45,12 @@ export let workHistorySchema = yup.object().shape({
 
 
 export let personalInfoSchema = yup.object().shape({
+    desiredPosition: yup.string().required('Please enter your desired position'),
     fName: yup.string().required('Please enter your first name'),
     mName: yup.string().nullable(true),
     lName: yup.string().required('Please enter your last name'),
     email: yup.string().email(`Email doesn't look right`).required('Please provide your email'),
-    contactNo: yup.number().required('Please provide your contact number').positive(),
+    contactNo: yup.string().required('Please provide contact number').max(11, 'Contact Number\'s max length is 11'),
     birthDate: yup.date().required('Please provide your birth date'),
     address: yup.string().required('Please provde your address'),
     city: yup.string().required('Please provide your city'),

@@ -14,7 +14,7 @@
 
     let values={};
     $:values.endDate = values.currentWork !== undefined ? null : values.endDate;
-    $:values.currentWork = values.endDate === null ? true : undefined;
+    $:values.currentWork = values.endDate === null ? 'on' : undefined;
     let errors = {};
     let workHistory;
     let currentSelectedWH;
@@ -98,7 +98,6 @@
         const res = await getAllWorkHistoryByUserId($currentUser.userId);
         if(res!==undefined || res !== []){
             workHistory = res;
-            values = res;
             currentUserWorkHistory.set(res);
         }
     };
@@ -176,7 +175,7 @@
                         />
                     </div>
 
-                    <div disabled={values.currentWork} class="col-span-4 sm:col-span-2">
+                    <div hidden={values.currentWork} class="col-span-4 sm:col-span-2">
                         <label class="block text-sm font-medium text-gray-700"
                             >End Date</label
                         >

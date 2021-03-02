@@ -3,7 +3,7 @@
     import Header from '../components/Header.svelte';
     import Login from '../components/Login.svelte';
 
-    import {currentUser} from '../util/store.js';
+    import {currentUser, currentUserPersonalInfo} from '../util/store.js';
 
 </script>
 
@@ -20,7 +20,9 @@
       <Nav />
       
       <div class="flex flex-col w-full md:space-y-4">
-        <Header />
+        {#if ($currentUserPersonalInfo.personalInfoId !== undefined)}
+          <Header />
+        {/if}
 
 
         <div class="overflow-auto h-screen pb-24 px-4 md:px-6">

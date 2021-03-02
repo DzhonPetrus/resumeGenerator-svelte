@@ -1,17 +1,10 @@
 <script>
     
-    let showModal = true;
-    const toggleModal = () => showModal = !showModal;
+    export let hideModal = true;
+    const toggleModal = () => hideModal = !hideModal;
 </script>
-<h1> WOOF INSIDE ROUTE </h1>
-<button on:click={() => showModal = !showModal}>show modal</button>
 
-
-
-
-
-
-<div on:click={toggleModal} hidden={showModal} class="fixed z-10 inset-0 overflow-y-auto">
+<div on:click={toggleModal} hidden={hideModal} class="fixed z-10 inset-0 overflow-y-auto">
   <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
     <!--
       Background overlay, show/hide based on modal state.

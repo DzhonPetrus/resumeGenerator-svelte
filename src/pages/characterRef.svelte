@@ -94,7 +94,6 @@
         const res = await getAllCharacterRefByUserId($currentUser.userId);
         if(res!==undefined || res !== []){
             characterRef = res;
-            values = res;
             currentUserCharacterRef.set(res);
         }
     };

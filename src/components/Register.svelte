@@ -54,7 +54,7 @@
         </div>
         <span class="justify-center text-sm text-center text-gray-500 flex-items-center dark:text-gray-400">
             Already have an account ?
-            <a on:click={()=> $loginState='login'} href="#" class="text-sm text-blue-500 underline hover:text-blue-700">
+            <a on:click={()=> $loginState='login'}  class="cursor-pointer text-sm text-blue-500 underline hover:text-blue-700">
                 Sign in
             </a>
         </span>

@@ -8,7 +8,7 @@ export let loginState = writable('login');
 
 export let personalInfoId = writable();
 export let currentUser = writable();
-export let currentUserPersonalInfo = writable();
+export let currentUserPersonalInfo = writable([]);
 export let currentUserWorkHistory = writable([]);
 export let currentUserEBG = writable([]);
 export let currentUserCharacterRef = writable([]);

@@ -1,7 +1,7 @@
 <script>
     import { url, isActive } from "@sveltech/routify";
     import ToggleDarkMode from './ToggleDarkMode.svelte';
-    import {currentUser} from "../util/store.js";
+    import {currentUser, currentUserPersonalInfo} from "../util/store.js";
     const links = [
         [
             "./index",
@@ -38,6 +38,13 @@
             `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
   <path fill-rule="evenodd" d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z" clip-rule="evenodd" />
 </svg>`,
+        ],
+        [
+            "./resume",
+            "Resume",
+            `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+  <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+</svg>`,
         ]
     ];
 
@@ -49,6 +56,8 @@
         localStorage.removeItem('currentUser');
         currentUser.set();
     };
+
+    $:console.log($currentUserPersonalInfo)
 </script>
 
 <div class="h-screen hidden lg:block shadow-lg relative w-80">
@@ -79,6 +88,8 @@
                     </a>
                 {/each}
             </div>
+        {#if ($currentUserPersonalInfo.personalInfoId === undefined)}
+            <br/><hr />
             <a on:click={ logout} class="hover:text-gray-800 cursor-pointer text-gray-400 w-full flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start" >
                 <span class="text-left">
                     <svg width="20" height="20">
@@ -89,6 +100,7 @@
                     Logout
                 </span>
             </a>
+        {/if}
         </nav>
     </div>
 </div>
