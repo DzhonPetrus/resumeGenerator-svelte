@@ -87,7 +87,6 @@
 
         if(confirm('Are you sure you want to delete Work History with index='+WH[1])){
                 response = await deleteWorkHistory(selectedWHId);
-                console.log(response);
                 notifier.success(response[0]);
                 const newArr = $currentUserWorkHistory.filter((wh,i) => i !== WH[1]);
                 currentUserWorkHistory.set(newArr);

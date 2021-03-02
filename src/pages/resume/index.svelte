@@ -6,8 +6,6 @@
 
     function handleClick(template){
         let element = document.getElementById(template);
-        console.log(template);
-        console.log(element);
         html2pdf(element);
     }
 </script>
@@ -18,10 +16,13 @@
 
 
 
-<div class="shadow overflow-hidden sm:rounded-md bg-white">
+<div class="shadow overflow-hidden sm:rounded-md bg-white items-center">
 {#each templates as url}
 <div class="px-4 py-5 bg-white sm:p-6">
-  <h1 class="text-gray-900 font-bold text-2xl">{url}</h1>
+  <h1 class="text-gray-900 font-bold text-2xl justify-center items-center flex ">
+    {url}
+  </h1>
+  <br/>
 <iframe id={url} src={baseURL+url.toLowerCase()}
         width="100%" height="500" frameborder="0"
         allowfullscreen >
@@ -31,8 +32,9 @@
     </a>
   </p>
 </iframe>
+  <br/>
 
-<a href={baseURL+url.toLowerCase()}>
+<a href={baseURL+url.toLowerCase()} class="hover:text-gray-800 cursor-pointer text-gray-400 w-full flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-center">
     View {url} in full page
 </a>
 

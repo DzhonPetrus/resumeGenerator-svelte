@@ -57,7 +57,6 @@
         currentUser.set();
     };
 
-    $:console.log($currentUserPersonalInfo)
 </script>
 
 <div class="h-screen hidden lg:block shadow-lg relative w-80">

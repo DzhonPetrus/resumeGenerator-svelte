@@ -33,7 +33,6 @@
 
             if(confirm('Are you sure you want to save your Character Reference?')){
                 response = await addCharacterRef(newCharacterRef);
-                console.log(response);
                 notifier.success(response[0]);
                 getCharacterRef();
                 values={};
@@ -83,7 +82,6 @@
 
         if(confirm('Are you sure you want to delete Character Reference with index='+CharacterRef[1])){
                 response = await deleteCharacterRef(selectedCharacterRefId);
-                console.log(response);
                 notifier.success(response[0]);
                 const newArr = $currentUserCharacterRef.filter((ebg,i) => i !== CharacterRef[1]);
                 currentUserCharacterRef.set(newArr);

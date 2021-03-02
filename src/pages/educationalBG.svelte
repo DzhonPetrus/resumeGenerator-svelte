@@ -37,7 +37,6 @@
 
             if(confirm('Are you sure you want to save your Educational Background?')){
                 response = await addEducationBG(newEBG);
-                console.log(response);
                 notifier.success(response[0]);
                 getEducationBG();
                 values={};
@@ -90,7 +89,6 @@
 
         if(confirm('Are you sure you want to delete Educational Background with index='+EBG[1])){
                 response = await deleteEducationBG(selectedEBGId);
-                console.log(response);
                 notifier.success(response[0]);
                 const newArr = $currentUserEBG.filter((ebg,i) => i !== EBG[1]);
                 currentUserEBG.set(newArr);
