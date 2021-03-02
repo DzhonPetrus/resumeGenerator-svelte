@@ -70,6 +70,7 @@
         <nav class="mt-6">
             <div>
                 {#each links as [path, name, icon]}
+                    {#if (name === 'Resume') && ($currentUserPersonalInfo !== undefined)}
                     <a
                         class="{$isActive(path)
                             ? 'border-l-4 border-purple-500 dark:text-white text-gray-800'
@@ -85,9 +86,26 @@
                             {name}
                         </span>
                     </a>
+                    {:else if name !== 'Resume'}
+                    <a
+                        class="{$isActive(path)
+                            ? 'border-l-4 border-purple-500 dark:text-white text-gray-800'
+                            : 'text-gray-400'} w-full flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start hover:text-gray-800 "
+                        href={$url(path)}
+                    >
+                        <span class="text-left">
+                            <svg width="20" height="20">
+                                {@html icon}
+                            </svg>
+                        </span>
+                        <span class="mx-2 text-sm font-normal">
+                            {name}
+                        </span>
+                    </a>
+                    {/if}
                 {/each}
             </div>
-        {#if ($currentUserPersonalInfo.personalInfoId === undefined)}
+        {#if ($currentUserPersonalInfo === undefined)}
             <br/><hr />
             <a on:click={ logout} class="hover:text-gray-800 cursor-pointer text-gray-400 w-full flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start" >
                 <span class="text-left">

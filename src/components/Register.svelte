@@ -31,7 +31,7 @@
             if(!userExist){
                 notifier.success('User successfully registered.', 2000);
                 // TODO
-                currentUser.set(response);
+                currentUser.set(response[0]);
                 localStorage.setItem('currentUser', JSON.stringify(response[0]));
             }else{
                 notifier.danger('Username already taken.', 2000);

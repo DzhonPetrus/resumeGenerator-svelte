@@ -27,10 +27,9 @@
       <Nav />
       
       <div class="flex flex-col w-full md:space-y-4">
-        {#if !($currentUserPersonalInfo.length > 0)}
-          {#if ($currentUserPersonalInfo.personalInfoId !== undefined)}
+
+        {#if ($currentUserPersonalInfo !== undefined)}
             <Header />
-          {/if}
         {/if}
 
 
