@@ -6,10 +6,11 @@
 
     import ToggleDarkMode from './ToggleDarkMode.svelte';
 
-    import {currentUser, currentUserPersonalInfo} from "../util/store.js";
+    import {currentUser, currentUserPersonalInfo, logout} from "../util/store.js";
 
     $: PI = $currentUserPersonalInfo;
     $:fullName = `${PI.fName} ${(PI.mName !== null && PI.mName !== undefined) ? PI.mName : ''} ${PI.lName} `;
+    $:photoURL = PI.photoURL !== null ? PI.photoURL : 'https://iupac.org/wp-content/uploads/2018/05/default-avatar.png';
 
     const links = [
         ["./index", "Home", `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -30,10 +31,6 @@
     const toggleDropdown = () => showDropdown = !showDropdown;
     let showDropdown = false;
 
-    const logout = () => {
-        localStorage.removeItem('currentUser');
-        currentUser.set();
-    };
 </script>
 <header class="w-full h-16 z-40 flex items-center justify-between">
 
@@ -53,7 +50,7 @@
             <span class="w-1 h-8 rounded-lg bg-gray-200">
             </span>
             <a href="#" class="block relative">
-                <img alt="profil" src={PI.photoURL} class="mx-auto object-cover rounded-full h-10 w-10 " />
+                <img alt="profil" src={photoURL} class="mx-auto object-cover rounded-full h-10 w-10 " />
             </a>
 
 <div class="relative inline-block text-left">

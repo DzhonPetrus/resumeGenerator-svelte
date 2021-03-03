@@ -1,7 +1,7 @@
 <script>
     import { url, isActive } from "@sveltech/routify";
     import ToggleDarkMode from './ToggleDarkMode.svelte';
-    import {currentUser, currentUserPersonalInfo} from "../util/store.js";
+    import {currentUser, currentUserPersonalInfo, logout} from "../util/store.js";
     const links = [
         [
             "./index",
@@ -52,11 +52,6 @@
     let photoURL =
         "https://iupac.org/wp-content/uploads/2018/05/default-avatar.png";
 
-    const logout = () => {
-        localStorage.removeItem('currentUser');
-        currentUser.set();
-    };
-
 </script>
 
 <div class="h-screen hidden lg:block shadow-lg relative w-80">
@@ -70,7 +65,7 @@
         <nav class="mt-6">
             <div>
                 {#each links as [path, name, icon]}
-                    {#if (name === 'Resume') && ($currentUserPersonalInfo !== undefined)}
+                    {#if (name === 'Resume') && ($currentUserPersonalInfo.length !== 0)}
                     <a
                         class="{$isActive(path)
                             ? 'border-l-4 border-purple-500 dark:text-white text-gray-800'
@@ -105,7 +100,7 @@
                     {/if}
                 {/each}
             </div>
-        {#if ($currentUserPersonalInfo === undefined)}
+        {#if ($currentUserPersonalInfo.length === 0)}
             <br/><hr />
             <a on:click={ logout} class="hover:text-gray-800 cursor-pointer text-gray-400 w-full flex items-center pl-6 p-2 my-2 transition-colors duration-200 justify-start" >
                 <span class="text-left">

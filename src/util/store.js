@@ -17,3 +17,13 @@ $: currentUser.set(
     JSON.parse(localStorage.getItem('currentUser')) !== null 
     ? JSON.parse(localStorage.getItem('currentUser')) 
     : undefined);
+
+
+export const logout = () => {
+    localStorage.removeItem('currentUser');
+    currentUser.set();
+    currentUserPersonalInfo.set([]);
+    currentUserWorkHistory.set([]);
+    currentUserEBG.set([]);
+    currentUserCharacterRef.set([])
+};

@@ -9,7 +9,7 @@
 
     const getInfo = async () => currentUserPersonalInfo.set(await getOnePersonalInfo($currentUser.userId));
 
-    if($currentUserPersonalInfo.length === 0)
+    if($currentUserPersonalInfo.length === 0 && $currentUser !== undefined)
       getInfo();
 
 </script>
@@ -28,7 +28,7 @@
       
       <div class="flex flex-col w-full md:space-y-4">
 
-        {#if ($currentUserPersonalInfo !== undefined)}
+        {#if ($currentUserPersonalInfo.length !== 0)}
             <Header />
         {/if}
 
